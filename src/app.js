@@ -8,19 +8,19 @@ const openStream = require('./openStream');
 
 const playVideo = require('./playVideo');
 
-function getpeer(){
+function getPeer(){
     const id = uid(5);
     $('#peer-id').append(id);
     return id;
 }
 
-const peer = Peer(getpeer(), {host :'webrtc30.herokuapp.com', port : 443 ,secure : true , key :'peerjs' });
+const peer = Peer(getPeer(), {host :'webrtcsocketio.herokuapp.com', port : 443 ,secure : true , key :'peerjs' });
 
 $('#btnConnect').click(() => {
     const Yourid =  $('#tokenID').val();
-    openStream(() => {
-        playVideo(stream, '#loadvideo' );
+    openStream(stream => {
+        playVideo(stream, 'loadvideo');
         const call = peer.call(Yourid , stream);
-        call.on('stream',remoteStream => (remoteStream,'loadvideoSc'));
+        call.on('stream',remoteStream => (remoteStream,'#loadvideoSc'));
     })
 });
