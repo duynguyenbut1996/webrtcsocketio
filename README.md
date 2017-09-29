@@ -4,7 +4,7 @@ Build a WebRTC and Experimentation a learn with Socket.io
 
 ## How to run
 
-##Install NodeJS
+##  Install NodeJS
 
 ### Instructions to install node JS at:
 
@@ -18,6 +18,6 @@ Require node version: v6.11.2
 
 $ npm run compile
 
-Run the application
+#### Run the application
 
 $ npm run start
