@@ -1580,7 +1580,10 @@ success: function (data, status) {
 async: false
 });
 
-const connectionObj = {key: '3jqb18u6ub2fn7b9'}
+const connectionObj = {
+    host: "webrtcsocketio.herokuapp.com",
+    
+}
 
 const peer = Peer(getPeer(), connectionObj);
 
