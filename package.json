@@ -66,7 +66,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "concurrently \"node index\" \"webpack -w\""
   },
   "author": "",
   "license": "ISC"
