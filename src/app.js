@@ -17,24 +17,21 @@ function getPeer(){
 var customConfig;
 
 
-var https = require("https");
-var options = {
-      host: "global.xirsys.net",
-      path: "/_turn/default",
-      method: "PUT",
-      headers: {
-          "Authorization": "Basic " + new Buffer("duynguyenbut1996:e44c5edc-a1e0-11e7-8ff9-07de7e02ee98").toString("base64")
-      }
-};
-var httpreq = https.request(options, function(httpres) {
-      var str = "";
-      httpres.on("data", function(data){ str += data; });
-      httpres.on("error", function(e){ console.log("error: ",e); });
-      httpres.on("end", function(){ 
-          console.log("ICE List: ", str);
-      });
+$.ajax({
+url: "https://global.xirsys.net/_turn",
+data: {
+  ident: "duynguyenbut1996",
+  secret: "e44c5edc-a1e0-11e7-8ff9-07de7e02ee98",
+  channel: "MyFirstApp",
+  secure: 1
+},
+success: function (data, status) {
+  // data.v is where the iceServers object lives
+  customConfig = data.v;
+  console.log(customConfig);
+},
+async: false
 });
-httpreq.end();
 
 const connectionObj = {key: '3jqb18u6ub2fn7b9'}
 
