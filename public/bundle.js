@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1543,59 +1543,54 @@ module.exports = Negotiator;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function playVideo(stream ,idVideo){
-    const video = document.getElementById(idVideo);
-    video.srcOject = stream;
-    video.onloadedmetadata = function(){
-        video.play();
-    };
+const Peer = __webpack_require__(7);
+
+const uid = __webpack_require__(13);
+
+const $ = __webpack_require__(14);
+
+const openCamera = __webpack_require__(15);
+
+const playVideo = __webpack_require__(16);
+
+function getPeer(){
+    const id = uid(10);
+    $('#peer-id').append(id);
+    return id;
 }
 
-module.exports = playVideo;
+const peer = Peer(getPeer(), {key: 'your-api-key'});
+
+$('#btnConnect').click(() => {
+    const Yourid =  $('#tokenID').val();
+    openCamera(stream => {
+        playVideo(stream, 'loadvideo');
+        const call = peer.call(Yourid , stream);
+        call.on('stream',remoteStream => playVideo(remoteStream,'loadvideoSc'));
+    });
+});
+
+
+peer.on('call',(call) =>{
+    openCamera(stream => {
+        playVideo(stream, 'loadvideo');
+        call.answer(stream);
+        call.on('stream',remoteStream => playVideo(remoteStream,'loadvideoSc'));
+    });
+});
+
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Peer = __webpack_require__(8);
-
-const uid = __webpack_require__(14);
-
-const $ = __webpack_require__(15);
-
-const openStream = __webpack_require__(16);
-
-const playVideo = __webpack_require__(6);
-
-function getPeer(){
-    const id = uid(5);
-    $('#peer-id').append(id);
-    return id;
-}
-
-const peer = Peer(getPeer(), {host :'webrtcsocketio.herokuapp.com', port : 443 ,secure : true , key :'peerjs' });
-
-$('#btnConnect').click(() => {
-    const Yourid =  $('#tokenID').val();
-    openStream(stream => {
-        playVideo(stream, 'loadvideo');
-        const call = peer.call(Yourid , stream);
-        call.on('stream',remoteStream => (remoteStream,'#loadvideoSc'));
-    })
-});
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var util = __webpack_require__(0);
 var EventEmitter = __webpack_require__(2);
-var Socket = __webpack_require__(9);
-var MediaConnection = __webpack_require__(10);
-var DataConnection = __webpack_require__(11);
+var Socket = __webpack_require__(8);
+var MediaConnection = __webpack_require__(9);
+var DataConnection = __webpack_require__(10);
 
 /**
  * A peer who can initiate connections with other peers.
@@ -2091,7 +2086,7 @@ module.exports = Peer;
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var util = __webpack_require__(0);
@@ -2311,7 +2306,7 @@ module.exports = Socket;
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var util = __webpack_require__(0);
@@ -2412,13 +2407,13 @@ module.exports = MediaConnection;
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var util = __webpack_require__(0);
 var EventEmitter = __webpack_require__(2);
 var Negotiator = __webpack_require__(5);
-var Reliable = __webpack_require__(12);
+var Reliable = __webpack_require__(11);
 
 /**
  * Wraps a DataChannel between two Peers.
@@ -2685,10 +2680,10 @@ module.exports = DataConnection;
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var util = __webpack_require__(13);
+var util = __webpack_require__(12);
 
 /**
  * Reliable transfer for Chrome Canary DataChannel impl.
@@ -3009,7 +3004,7 @@ module.exports.Reliable = Reliable;
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var BinaryPack = __webpack_require__(3);
@@ -3110,7 +3105,7 @@ module.exports = util;
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /**
@@ -3133,7 +3128,7 @@ function uid(len) {
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -13393,19 +13388,33 @@ return jQuery;
 
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 15 */
+/***/ (function(module, exports) {
 
-const playVideo = __webpack_require__(6)
 
-function openStream(cb){
-    navigator.mediaDevices.getUserMedia({audio:true , video : true})
-    .then(stream => {
-        cb(stream);
-    })
-    .catch(err => console.log(err));
+function openCamera(cb) {
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+        .then(stream => {
+            cb(stream);
+
+        })
+        .catch(err => console.log(err));
 }
-module.exports = openStream;
+module.exports = openCamera;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+function playVideo(stream ,idVideo){
+    const video = document.getElementById(idVideo);
+    video.srcObject = stream;
+    video.onloadedmetadata = function(){
+        video.play();
+    };
+}
+
+module.exports = playVideo;
 
 /***/ })
 /******/ ]);

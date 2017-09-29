@@ -1,6 +1,6 @@
 function playVideo(stream ,idVideo){
     const video = document.getElementById(idVideo);
-    video.srcOject = stream;
+    video.srcObject = stream;
     video.onloadedmetadata = function(){
         video.play();
     };

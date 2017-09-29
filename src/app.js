@@ -4,23 +4,32 @@ const uid = require('uid');
 
 const $ = require('jquery');
 
-const openStream = require('./openStream');
+const openCamera = require('./openCamera');
 
 const playVideo = require('./playVideo');
 
 function getPeer(){
-    const id = uid(5);
+    const id = uid(10);
     $('#peer-id').append(id);
     return id;
 }
 
-const peer = Peer(getPeer(), {host :'webrtcsocketio.herokuapp.com', port : 443 ,secure : true , key :'peerjs' });
+const peer = Peer(getPeer(), {key: 'your-api-key'});
 
 $('#btnConnect').click(() => {
     const Yourid =  $('#tokenID').val();
-    openStream(stream => {
+    openCamera(stream => {
         playVideo(stream, 'loadvideo');
         const call = peer.call(Yourid , stream);
-        call.on('stream',remoteStream => (remoteStream,'#loadvideoSc'));
-    })
+        call.on('stream',remoteStream => playVideo(remoteStream,'loadvideoSc'));
+    });
+});
+
+
+peer.on('call',(call) =>{
+    openCamera(stream => {
+        playVideo(stream, 'loadvideo');
+        call.answer(stream);
+        call.on('stream',remoteStream => playVideo(remoteStream,'loadvideoSc'));
+    });
 });
