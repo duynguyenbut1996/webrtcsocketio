@@ -1561,6 +1561,7 @@ function getPeer(){
     return id;
 }
 
+
 const peer = Peer(getPeer(), {key: '3jqb18u6ub2fn7b9'});
 
 $('#btnConnect').click(() => {
