@@ -1,4 +1,4 @@
-const express =require("express");
+const express = require("express");
 
 const app = express();
 
@@ -8,6 +8,14 @@ app.set('views' , './views');
 
 app.use(express.static('public'));
 
-app.get('/', (req,res) => res.render('home'));
+const server = require("http").createServer(app);
 
-app.listen(process.env.PORT || 5000,() => console.log('server start'));
+const io = require("socket.io")(server);
+
+server.listen(5000,() => console.log('server start'));
+
+io.on("connection",(socket)=>{
+    console.log("co nguoi ket noi");
+});
+
+app.get('/', (req,res) => res.render('home'));

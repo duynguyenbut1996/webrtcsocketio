@@ -8,6 +8,8 @@ const openCamera = require('./openCamera');
 
 const playVideo = require('./playVideo');
 
+const socket = io('http://localhost:5000');
+
 function getPeer(){
     const id = uid(10);
     $('#peer-id').append(id);
@@ -16,27 +18,24 @@ function getPeer(){
 
 var customConfig;
 
+// $.ajax({
+// url: "https://global.xirsys.net",
+// data: {
+//   ident: "duynguyenbut1996",
+//   secret: "e44c5edc-a1e0-11e7-8ff9-07de7e02ee98",
+//   channel: "MyFirstApp",
+//   secure: 1
+// },
+// success: function (data, status) {
+//   // data.v is where the iceServers object lives
+//   customConfig = data.v;
+//   console.log(customConfig);
+// },
+// async: false
+// });
 
-$.ajax({
-url: "https://global.xirsys.net/_turn",
-data: {
-  ident: "duynguyenbut1996",
-  secret: "e44c5edc-a1e0-11e7-8ff9-07de7e02ee98",
-  channel: "MyFirstApp",
-  secure: 1
-},
-success: function (data, status) {
-  // data.v is where the iceServers object lives
-  customConfig = data.v;
-  console.log(customConfig);
-},
-async: false
-});
+const connectionObj = {key: '3jqb18u6ub2fn7b9'};
 
-const connectionObj = {
-    host: "webrtcsocketio.herokuapp.com",
-    
-}
 
 const peer = Peer(getPeer(), connectionObj);
 
@@ -48,7 +47,6 @@ $('#btnConnect').click(() => {
         call.on('stream',remoteStream => playVideo(remoteStream,'loadvideoSc'));
     });
 });
-
 
 peer.on('call',(call) =>{
     openCamera(stream => {
