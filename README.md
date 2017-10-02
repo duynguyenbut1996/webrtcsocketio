@@ -10,7 +10,7 @@ Install NodeJS
 
 Require node version: v6.11.2
 
-Download library Jquery and Socket.io move public
+Download library Jquery,Bootstrap.min.css and Socket.io move public
 
 #### Set up NodeJS dependencies
 ```
