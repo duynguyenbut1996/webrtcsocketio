@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap.min.css">
+
     <title>WebRTC</title>
     <script src="jquery-3.2.1.min.js"></script>
     <script src="socket.io.js"></script>
@@ -14,15 +17,29 @@
         //     alert('hello');
         // })
     </script>
-    
+
 </head>
-<body>
-    <h2 id="peer-id">UID : </h2>
-    <video id="loadvideo" width="300" height="300"  controls></video><br />
-    <video id="loadvideoSc" width="500" height="500"  controls></video><br />
-    <input type="text" id="tokenID">
-    <button id="btnConnect">Connection</button>
-  
+
+<body style="position:relative;font:20px arial" class="container">
+    <div id="dChat" style="position:relative">
+        <!-- <h2 id="peer-id">UID : </h2> -->
+        <video id="loadvideo" width="300" height="300" controls></video><br />
+        <video id="loadvideoSc" width="500" height="500" controls></video><br />
+        <input class="form-control" id="tokenID" type="text" style="width:225px;">
+        <button class="btn" id="btnConnect">Connection</button>
+        <div style="position:absolute;top:5px;left:800px;">
+            <p>Danh Sách Tham Gia</p>
+            <ul class="list-group" id="ulUser">
+
+            </ul>
+        </div>
+    </div>
+
+    <div id="dDK">
+        <input class="form-control" id="txtUsername" style="position:absolute;top:7px;left:300px;width:225px" type="text" placeholder="Nhập Tên Người Dùng">
+        <button class="btn" id="btnSignUp" style="position:absolute;top:7px;left:530px;"> SignUp</button>
+    </div>
 </body>
 <script src="bundle.js"></script>
+
 </html>
