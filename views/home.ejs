@@ -10,17 +10,10 @@
     <title>WebRTC</title>
     <script src="jquery-3.2.1.min.js"></script>
     <script src="socket.io.js"></script>
-    <script>
-        var socket = io("http://localhost:5000");
-
-        // $(document).ready(function(){
-        //     alert('hello');
-        // })
-    </script>
-
+   
 </head>
 
-<body style="position:relative;font:20px arial" class="container">
+<body class="container" style="position:relative;font:20px arial">
     <div id="dChat" style="position:relative">
         <!-- <h2 id="peer-id">UID : </h2> -->
         <video id="loadvideo" width="300" height="300" controls></video><br />
@@ -30,8 +23,15 @@
         <div style="position:absolute;top:5px;left:800px;">
             <p>Danh Sách Tham Gia</p>
             <ul class="list-group" id="ulUser">
-
             </ul>
+        </div>
+        <div style="position:absolute;right:50px;bottom:50px;border-radius:4px;">
+            <div class="form-control" id="ContentChat" style="height:300px;width:500px;overflow: scroll;">
+            </div>
+            <div style="float:left;position:relative">
+                <input class="form-control" id="txtSend" style="width:500px;" type="text" placeholder="Nhập tin nhắn...">
+                <button class="btn" id="btnSend" style="position:absolute;right:0px;bottom:0px;">Send</button>
+            </div>
         </div>
     </div>
 
@@ -39,6 +39,8 @@
         <input class="form-control" id="txtUsername" style="position:absolute;top:7px;left:300px;width:225px" type="text" placeholder="Nhập Tên Người Dùng">
         <button class="btn" id="btnSignUp" style="position:absolute;top:7px;left:530px;"> SignUp</button>
     </div>
+
+
 </body>
 <script src="bundle.js"></script>
 

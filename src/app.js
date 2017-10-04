@@ -22,15 +22,16 @@ socket.on('Active_User',(arrUserInfo) => {
     // take user information and display screen
     arrUserInfo.forEach((user) => {
         const {Ten , peerID} = user;
-        $('#ulUser').append(`<li id="${peerID}" class="list-group-item"> ${Ten} </li>`);
+        
+        $('#ulUser').append(`<li id="${peerID}" class="list-group-item" style:":hover {background: blue;}"> ${Ten} </li>`);
     });
 
-    // everyone can connection and 
+    // everyone can connection
     socket.on('New_User',(user) => {
         const {Ten , peerID} = user;
         $('#ulUser').append(`<li id="${peerID}" class="list-group-item"> ${Ten} </li>`);
     });
-    
+
     // User disconnect
     socket.on('User_disconnect',(peerID) => {
         $(`#${peerID}`).remove();
@@ -38,6 +39,10 @@ socket.on('Active_User',(arrUserInfo) => {
 });
 
 socket.on('Already_exists', () => alert('Tên Người Dùng Đã Tồn Tại,Vui Lòng Chọn UserName Khác'));
+
+socket.emit("sendData", () => {
+    return $('#txtUsername').val();
+})
 
 
 
@@ -78,7 +83,6 @@ peer.on('call',(call) =>{
 });
 
 
-
 // Click Caller update
 
 $('#ulUser').on('click','li',function(){
@@ -87,5 +91,22 @@ $('#ulUser').on('click','li',function(){
         playVideo(stream, 'loadvideo');
         const call = peer.call(ids , stream);
         call.on('stream',remoteStream => playVideo(remoteStream,'loadvideoSc'));
+    });
+});
+
+function sendData() {
+    return $('#txtSend').val();
+}
+
+socket.on("Server-send-data", function(result){
+    console.log(result);
+    
+     $('#ContentChat').append(result.user.ten+":"+ result.msg + "<br />" );
+});
+
+$(document).ready(function () {
+    $('#btnSend').click(function () {
+        const text = sendData();
+        socket.emit("Client-send-data", text);
     });
 });
